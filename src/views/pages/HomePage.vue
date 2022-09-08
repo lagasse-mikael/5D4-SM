@@ -1,7 +1,7 @@
 <template>
   <MainLayout>
     <div class="py-4 container-fluid">
-      <h1>Andromia</h1>
+      <h1>{{Andromia}}</h1>
       <HelloWorld />
     </div>
   </MainLayout>

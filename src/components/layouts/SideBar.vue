@@ -13,11 +13,24 @@
         </div>
         <hr class="mt-0 horizontal dark dark-fix" />
         <div class="collapse navbar-collapse w-auto h-auto h-100" id="sidenav-collapse-main">
+            <ul class="navbar-nav">
+                <SideBarItem url="/" text="Home">
+                    <template v-slot:icon>
+                        <i class="ni ni-diamond text-primary text-sm opacity-10" />
+                    </template>
+                </SideBarItem>
+                <SideBarItem url="/planets" text="Planets">
+                    <template v-slot:icon>
+                        <i class="ni ni-planet text-warning text-sm opacity-10" />
+                    </template>
+                </SideBarItem>
+            </ul>
         </div>
     </aside>
 </template>
 
 <script setup>
+import SideBarItem from "./SideBarItem.vue";
 
 </script>
 
