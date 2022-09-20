@@ -2,6 +2,7 @@
 import argon from 'argon2'
 import Chance from 'chance';
 import HttpErrors from 'http-errors';
+import jwt from 'jsonwebtoken'
 
 import Account from '../models/account.model.js';
 
@@ -10,13 +11,13 @@ const chance = new Chance()
 class AccountRepository {
 
   async login(email, password) {
-    const account = Account.findOne({ email: email })
+    const account = await Account.findOne({ email: email })
 
     if (!account) {
       return { err: HttpErrors.Unauthorized() }
     }
 
-    const isPasswordValid = await argon.verify(password, account.passwordHash)
+    const isPasswordValid = await argon.verify(account.passwordHash, password)
 
     return isPasswordValid ? { account } : { err: HttpErrors.Unauthorized() }
   }
@@ -33,8 +34,10 @@ class AccountRepository {
     return Account.create(account)
   }
 
-  generateJWT(account, needNewRefresh = true) {
+  generateJWT(email) {
+    const accessToken = jwt.sign({ email }, process.env.JWT_TOKEN_SECRET, { expiresIn: process.env.JWT_TOKEN_LIFE, issuer: process.env.BASE_URL })
 
+    return { accessToken }
   }
 
   async validateRefreshToken(email, refreshToken) {
