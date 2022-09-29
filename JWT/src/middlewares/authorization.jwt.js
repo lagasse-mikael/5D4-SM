@@ -6,4 +6,14 @@ const guardAuthJWT = expressjwt({
     algorithms: ['HS256']
 });
 
-export { guardAuthJWT }
+const guardRefreshToken = expressjwt({
+    secret: process.env.JWT_REFRESH_SECRET,
+    issuer: process.env.BASE_URL,
+    algorithms: ['HS256'],
+    requestProperty: "refreshToken",
+    getToken: req => {
+        return req.body.refreshToken
+    }
+})
+
+export { guardAuthJWT, guardRefreshToken }
