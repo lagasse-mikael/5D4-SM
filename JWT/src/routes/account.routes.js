@@ -65,7 +65,6 @@ class AccountRoutes {
     async refreshToken(req, res, next) {
         try {
             const account = await accountRepository.retrieveById(req.refreshToken.userID)
-            console.log(account);
             const tokens = accountRepository.generateJWT(account.email, account._id)
             
             res.status(201).json({ tokens })
